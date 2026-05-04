@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "name": "Los Santos",
+    "description": "The city of Los Santos",
+    "x": 2100,
+    "y": 4200,
+    "category": "landmark"
+  },
+  {
+    "id": "2",
+    "name": "Sandy Shores",
+    "description": "Desert town in Blaine County",
+    "x": 2800,
+    "y": 2200,
+    "category": "landmark"
+  },
+  {
+    "id": "3",
+    "name": "Paleto Bay",
+    "description": "Small fishing town in the north",
+    "x": 1100,
+    "y": 800,
+    "category": "landmark"
+  }
+]
