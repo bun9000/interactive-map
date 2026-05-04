@@ -2,6 +2,7 @@
 
 import { ReactNode } from "react"
 import { AppSidebar } from "@/components/app-sidebar"
+import { MapContextProvider } from "@/lib/map-context"
 import {
   SidebarInset,
   SidebarProvider,
@@ -23,6 +24,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pageName = lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1)
 
   return (
+    <MapContextProvider>
     <SidebarProvider suppressHydrationWarning>
       <AppSidebar />
       <SidebarInset>
@@ -45,5 +47,6 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </div>
       </SidebarInset>
     </SidebarProvider>
+    </MapContextProvider>
   )
 }

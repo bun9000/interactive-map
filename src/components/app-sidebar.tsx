@@ -1,8 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { usePathname } from "next/navigation"
-import { LayoutDashboard, Map, MapPin, Settings } from "lucide-react"
+import { usePathname, useRouter } from "next/navigation"
+import { ChevronDown, LayoutDashboard, Map, MapPin, Settings } from "lucide-react"
+import locations from "@/data/locations.json"
+import { useMapContext } from "@/lib/map-context"
 import {
   Sidebar,
   SidebarContent,
@@ -13,17 +15,22 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
 
 const navItems = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard },
   { title: "Map", url: "/map", icon: Map },
-  { title: "Locations", url: "/locations", icon: MapPin },
 ]
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname()
+  const router = useRouter()
+  const [locationsOpen, setLocationsOpen] = React.useState(true)
+  const { selectedLocationId, setSelectedLocationId } = useMapContext()
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -59,6 +66,35 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                tooltip="Locations"
+                onClick={() => setLocationsOpen((o) => !o)}
+              >
+                <MapPin />
+                <span>Locations</span>
+                <ChevronDown
+                  className={`ml-auto transition-transform duration-200 ${locationsOpen ? "rotate-180" : ""}`}
+                />
+              </SidebarMenuButton>
+              {locationsOpen && (
+                <SidebarMenuSub>
+                  {locations.map((loc) => (
+                    <SidebarMenuSubItem key={loc.id}>
+                      <SidebarMenuSubButton
+                        isActive={selectedLocationId === loc.id}
+                        onClick={() => {
+                          setSelectedLocationId(loc.id)
+                          router.push("/map")
+                        }}
+                      >
+                        <span>{loc.name}</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                  ))}
+                </SidebarMenuSub>
+              )}
+            </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>

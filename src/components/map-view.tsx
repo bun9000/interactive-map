@@ -1,11 +1,12 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { MapContainer, ImageOverlay, CircleMarker, Popup, useMap } from "react-leaflet"
 import "leaflet/dist/leaflet.css"
 import L from "leaflet"
 import locations from "@/data/locations.json"
 import "@/lib/SmoothWheelZoom"
+import { useMapContext } from "@/lib/map-context"
 
 const IMAGE_HEIGHT = 6144
 const BOUNDS: L.LatLngBoundsExpression = [[0, 0], [IMAGE_HEIGHT, 4096]]
@@ -25,7 +26,26 @@ function MapInit() {
   return null
 }
 
+function FlyToLocation({ markerRefs }: { markerRefs: React.MutableRefObject<Map<string, L.CircleMarker | null>> }) {
+  const map = useMap()
+  const { selectedLocationId } = useMapContext()
+
+  useEffect(() => {
+    if (!selectedLocationId) return
+    const loc = locations.find((l) => l.id === selectedLocationId)
+    if (!loc) return
+    map.once("moveend", () => {
+      markerRefs.current.get(selectedLocationId)?.openPopup()
+    })
+    map.flyTo(toLatLng(loc.x, loc.y) as L.LatLngExpression, 1, { duration: 0.8 })
+  }, [selectedLocationId, map, markerRefs])
+
+  return null
+}
+
 export default function MapView() {
+  const markerRefs = useRef<Map<string, L.CircleMarker | null>>(new Map())
+
   return (
     <MapContainer
       crs={L.CRS.Simple}
@@ -44,6 +64,7 @@ export default function MapView() {
       {locations.map((loc) => (
         <CircleMarker
           key={loc.id}
+          ref={(el) => { markerRefs.current.set(loc.id, el) }}
           center={toLatLng(loc.x, loc.y)}
           radius={6}
           pathOptions={{ color: "#a855f7", fillColor: "#a855f7", fillOpacity: 0.9, weight: 2 }}
@@ -59,6 +80,7 @@ export default function MapView() {
       ))}
 
       <MapInit />
+      <FlyToLocation markerRefs={markerRefs} />
     </MapContainer>
   )
 }
