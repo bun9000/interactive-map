@@ -1,26 +1,20 @@
 [
   {
-    "id": "1",
-    "name": "Los Santos",
-    "description": "The city of Los Santos",
-    "x": 2100,
-    "y": 4200,
-    "category": "landmark"
+    "id": "gXyUyRbaHhTgc3FehZkai",
+    "name": "Mount Josiah",
+    "description": "The peak of Mount Josaih",
+    "coords": "vec3(-1182.625, 3851.901, 489.393)",
+    "category": "landmark",
+    "img": ""
   },
   {
-    "id": "2",
-    "name": "Sandy Shores",
-    "description": "Desert town in Blaine County",
-    "x": 2800,
-    "y": 2200,
-    "category": "landmark"
-  },
-  {
-    "id": "3",
-    "name": "Paleto Bay",
-    "description": "Small fishing town in the north",
-    "x": 1100,
-    "y": 800,
-    "category": "landmark"
+    "id": "QJEqkNiciYFgYhKUzihDd",
+    "name": "Samara x Sloan",
+    "submitted_by_character": "Sloan Mercer",
+    "submitted_by_stateid": "18128",
+    "description": "",
+    "coords": "vec3(-1182.625, 3851.901, 489.393)",
+    "category": "photo",
+    "img": "https://kappa.lol/AcTcKx.jpg"
   }
 ]

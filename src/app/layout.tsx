@@ -24,7 +24,7 @@ const sourceSerif4 = Source_Serif_4({ variable: "--font-source-serif-4", subsets
 const gabriela = Gabriela({ variable: "--font-gabriela", weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Sightseeing Map",
+  title: "Interactive Map",
   description: "Track and discover sightseeing locations",
 };
 
